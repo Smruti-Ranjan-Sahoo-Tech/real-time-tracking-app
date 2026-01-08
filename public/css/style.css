@@ -12,3 +12,12 @@ html,body{
     width: 100%;
     height: 100%;
 }
+.socket-id-label {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+}

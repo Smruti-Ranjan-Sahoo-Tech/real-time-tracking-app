@@ -22,9 +22,27 @@ io.on("connection", (socket) => {
             ...data
         })
     })
-    socket.on("disconnect",(id)=>{
+    socket.on("user-disconnect",(id)=>{
         io.emit("user-disconnected",socket.id);
     })
+    socket.on("receive-location", (data) => {
+  const { id, latitude, longitude } = data;
+
+  map.setView([latitude, longitude], 16);
+
+  if (!userColors[id]) {
+    userColors[id] = getRandomColor();
+  }
+
+  if (markers[id]) {
+    markers[id].setLatLng([latitude, longitude]);
+  } else {
+    markers[id] = L.marker(
+      [latitude, longitude],
+      { icon: markerIcons[userColors[id]] }
+    ).addTo(map);
+  }
+});
 });
 
 // route
