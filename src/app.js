@@ -16,38 +16,38 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // socket.io
 io.on("connection", (socket) => {
-    socket.on("send-location",(data)=>{
-        io.emit("receive-location",{
-            id:socket.id,
+    socket.on("send-location", (data) => {
+        io.emit("receive-location", {
+            id: socket.id,
             ...data
         })
     })
-    socket.on("user-disconnect",(id)=>{
-        io.emit("user-disconnected",socket.id);
+    socket.on("user-disconnect", (id) => {
+        io.emit("user-disconnected", socket.id);
     })
     socket.on("receive-location", (data) => {
-  const { id, latitude, longitude } = data;
+        const { id, latitude, longitude } = data;
 
-  map.setView([latitude, longitude], 16);
+        map.setView([latitude, longitude], 16);
 
-  if (!userColors[id]) {
-    userColors[id] = getRandomColor();
-  }
+        if (!userColors[id]) {
+            userColors[id] = getRandomColor();
+        }
 
-  if (markers[id]) {
-    markers[id].setLatLng([latitude, longitude]);
-  } else {
-    markers[id] = L.marker(
-      [latitude, longitude],
-      { icon: markerIcons[userColors[id]] }
-    ).addTo(map);
-  }
-});
+        if (markers[id]) {
+            markers[id].setLatLng([latitude, longitude]);
+        } else {
+            markers[id] = L.marker(
+                [latitude, longitude],
+                { icon: markerIcons[userColors[id]] }
+            ).addTo(map);
+        }
+    });
 });
 
 // route
 app.get("/", (req, res) => {
-  res.render("index");
+    res.render("Index");
 });
 
 module.exports = server;
